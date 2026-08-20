@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { submitCapawardsBallot } from "./actions";
 
 interface Person {
@@ -45,6 +45,26 @@ export function CapawardsVotingFlow({
     () => allPassengers.filter((p) => p.id !== voterId),
     [allPassengers, voterId]
   );
+
+  const topRef = useRef<HTMLDivElement>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Al entrar en una categoría o en la revisión, sube el scroll para que se
+  // lea desde el principio.
+  useEffect(() => {
+    if (step.name === "category" || step.name === "review") {
+      topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [step]);
+
+  function selectNominee(categoryId: string, personId: string) {
+    setVotes((v) => ({ ...v, [categoryId]: personId }));
+    // Baja el scroll hasta el botón "Siguiente" para que quede a mano en
+    // cuanto se habilita.
+    requestAnimationFrame(() => {
+      nextButtonRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
 
   function goToCategory(index: number) {
     if (index < 0) {
@@ -136,7 +156,7 @@ export function CapawardsVotingFlow({
     const category = categories[step.index];
     const selected = votes[category.id];
     return (
-      <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8">
+      <div ref={topRef} className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8">
         <p className="text-xs font-medium uppercase tracking-wide text-gold-600 mb-1">
           Categoría {step.index + 1} de {categories.length}
         </p>
@@ -149,7 +169,7 @@ export function CapawardsVotingFlow({
           {nomineesFor.map((p) => (
             <button
               key={p.id}
-              onClick={() => setVotes((v) => ({ ...v, [category.id]: p.id }))}
+              onClick={() => selectNominee(category.id, p.id)}
               className={`text-left rounded-xl border px-4 py-3 transition-colors ${
                 selected === p.id
                   ? "border-gold-500 bg-gold-50 ring-1 ring-gold-500"
@@ -169,6 +189,7 @@ export function CapawardsVotingFlow({
             Atrás
           </button>
           <button
+            ref={nextButtonRef}
             onClick={() => goToCategory(step.index + 1)}
             disabled={!selected}
             className="rounded-full bg-navy-700 text-white font-medium px-6 py-2.5 hover:bg-navy-600 transition-colors disabled:opacity-40 disabled:pointer-events-none"
@@ -182,7 +203,7 @@ export function CapawardsVotingFlow({
 
   if (step.name === "review") {
     return (
-      <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8">
+      <div ref={topRef} className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8">
         <h2 className="font-display font-semibold text-xl text-navy-800 mb-1">
           Revisa tu voto, <span className="font-medium text-navy-700">{voter?.full_name}</span>.
         </h2>

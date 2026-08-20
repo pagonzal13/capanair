@@ -24,7 +24,7 @@ export default async function MafiaPage() {
         <h2 className="font-display font-semibold text-xl mb-2">Cómo se juega</h2>
         <p className="text-white/80 text-sm leading-relaxed">
           El juego de La Mafia ya es un clásico de esta fiesta. Se jugará durante todo el fin de semana.
-          Al llegar a la casa, pídele a 𝐏𝐚𝐮𝐥𝐢𝐬𝐡 tu papelito "Top Secret". En él encontrarás escrito a quién tienes que 𝘮𝘢𝘵𝘢𝘳
+          Al llegar a la casa, pídele a 𝐏𝐚𝐮𝐥𝐢𝐬𝐡 tu papelito &ldquo;Top Secret&rdquo;. En él encontrarás escrito a quién tienes que 𝘮𝘢𝘵𝘢𝘳
           y con qué objeto.
         </p>
 

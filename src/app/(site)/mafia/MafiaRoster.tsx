@@ -16,19 +16,34 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
   const [modalNames, setModalNames] = useState<string[]>([]);
   const notifiedRef = useRef<Set<string>>(new Set());
 
-  function checkForNewDeaths(list: PassengerStatus[]) {
-    const newlyDead = list.filter((p) => p.is_dead && !notifiedRef.current.has(p.id));
-    if (newlyDead.length === 0) return;
-
-    const updated = new Set(notifiedRef.current);
-    newlyDead.forEach((p) => updated.add(p.id));
-    notifiedRef.current = updated;
+  function persistNotified(set: Set<string>) {
+    notifiedRef.current = set;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(updated)));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(set)));
     } catch {
       // localStorage no disponible: seguimos igualmente, solo perdemos persistencia
     }
-    setModalNames((prev) => [...prev, ...newlyDead.map((p) => p.full_name)]);
+  }
+
+  function syncWithState(list: PassengerStatus[]) {
+    const updated = new Set(notifiedRef.current);
+
+    // Si alguien ha revivido, lo quitamos de notificados para que, si vuelve
+    // a morir, se avise de nuevo como novedad.
+    for (const p of list) {
+      if (!p.is_dead && updated.has(p.id)) {
+        updated.delete(p.id);
+      }
+    }
+
+    const newlyDead = list.filter((p) => p.is_dead && !updated.has(p.id));
+    newlyDead.forEach((p) => updated.add(p.id));
+
+    persistNotified(updated);
+
+    if (newlyDead.length > 0) {
+      setModalNames((prev) => [...prev, ...newlyDead.map((p) => p.full_name)]);
+    }
   }
 
   useEffect(() => {
@@ -38,7 +53,7 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
     } catch {
       notifiedRef.current = new Set();
     }
-    checkForNewDeaths(initialPassengers);
+    syncWithState(initialPassengers);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -49,7 +64,7 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
         if (!res.ok) return;
         const data = (await res.json()) as { passengers: PassengerStatus[] };
         setPassengers(data.passengers ?? []);
-        checkForNewDeaths(data.passengers ?? []);
+        syncWithState(data.passengers ?? []);
       } catch {
         // Error de red puntual: se reintenta en el siguiente ciclo
       }
@@ -62,32 +77,49 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
 
   return (
     <div>
-      <ul className="divide-y divide-navy-100 rounded-2xl border border-navy-100 bg-white shadow-card overflow-hidden">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {sorted.map((p) => (
-          <li
+          <div
             key={p.id}
-            className={`flex items-center justify-between gap-3 px-4 py-3 ${p.is_dead ? "bg-navy-50" : ""}`}
+            className={`rounded-2xl border p-4 text-center shadow-card transition-colors ${
+              p.is_dead ? "bg-navy-50 border-navy-100" : "bg-white border-navy-100"
+            }`}
           >
-            <span className={p.is_dead ? "line-through text-navy-400" : "text-navy-800 font-medium"}>
+            <div
+              className={`font-display font-semibold ${
+                p.is_dead ? "line-through text-navy-400" : "text-navy-800"
+              }`}
+            >
               {p.full_name}
-            </span>
-            {p.is_dead && (
-              <span className="inline-flex items-center gap-1 shrink-0 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded-full px-2.5 py-1">
-                💀 Eliminado/a
-              </span>
-            )}
-          </li>
+            </div>
+            <div className="mt-2">
+              {p.is_dead ? (
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded-full px-2.5 py-1">
+                  💀 Eliminado/a
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-navy-600 bg-gold-50 border border-gold-200 rounded-full px-2.5 py-1">
+                  🤫 Sigue en la partida
+                </span>
+              )}
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
 
       {modalNames.length > 0 && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/60 px-4">
-          <div className="bg-white rounded-2xl shadow-card max-w-sm w-full p-6 text-center">
-            <p className="text-4xl mb-3">💀</p>
-            <h2 className="font-display font-semibold text-xl text-navy-800 mb-3">
+        <div className="mafia-modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-navy-900/70 px-4">
+          <div className="mafia-modal-card bg-white rounded-2xl shadow-card max-w-sm w-full p-6 text-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/mafia-victim-placeholder.png"
+              alt=""
+              className="w-32 h-32 mx-auto mb-4 drop-shadow-lg"
+            />
+            <h2 className="font-display font-semibold text-2xl text-navy-800 mb-3">
               {modalNames.length === 1 ? "Nueva víctima" : "Nuevas víctimas"}
             </h2>
-            <ul className="text-navy-700 font-medium space-y-1 mb-6">
+            <ul className="text-navy-700 font-medium text-lg space-y-1 mb-6">
               {modalNames.map((name, i) => (
                 <li key={`${name}-${i}`}>{name}</li>
               ))}
