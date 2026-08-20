@@ -150,7 +150,7 @@ begin
   ) w
   where c.id = w.category_id;
 
-  update app_settings set capawards_results_published = true, updated_at = now();
+  update app_settings set capawards_results_published = true, updated_at = now() where id = true;
 end;
 $$;
 
