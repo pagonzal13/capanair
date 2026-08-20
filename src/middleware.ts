@@ -20,6 +20,12 @@ export async function middleware(request: NextRequest) {
 
 // El panel /admin tiene su propia contraseña y gestion de sesion
 // independiente (ver src/app/admin), por eso queda excluido aqui.
+//
+// Tambien se excluyen los archivos estaticos de /public (logo, favicon,
+// imagenes de La Mafia, etc: cualquier ruta que termine en .algo). Sin
+// esto, el propio <img> del logo en /acceso quedaba atrapado por este
+// middleware y, al no haber todavia cookie de sesion, la peticion de la
+// imagen se redirigia a /acceso (HTML) en lugar de servir el PNG.
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|images|acceso|admin).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|acceso|admin|.*\\.\\w+$).*)"],
 };
