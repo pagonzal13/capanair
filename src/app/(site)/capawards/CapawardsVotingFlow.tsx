@@ -102,10 +102,10 @@ export function CapawardsVotingFlow({
     return (
       <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8">
         <h2 className="font-display font-semibold text-lg text-navy-800 mb-1">
-          Selecciona el pasajero que va a realizar la votación
+          Selecciona el pasajero
         </h2>
         <p className="text-navy-500 text-sm mb-5">
-          Solo podrás votar una vez por pasajero. Elige quién eres tú.
+          Haz click sobre tu nombre en la lista para empezar la votación
         </p>
         {eligibleVoters.length === 0 ? (
           <p className="text-navy-500 text-sm">
@@ -184,10 +184,9 @@ export function CapawardsVotingFlow({
     return (
       <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8">
         <h2 className="font-display font-semibold text-xl text-navy-800 mb-1">
-          Revisa tu voto
+          Revisa tu voto, <span className="font-medium text-navy-700">{voter?.full_name}</span>.
         </h2>
-        <p className="text-navy-500 text-sm mb-5">
-          Votando como <span className="font-medium text-navy-700">{voter?.full_name}</span>.
+        <p className="text-navy-500 text-sm mb-5"> 
           Toca una categoría para cambiar tu elección.
         </p>
 
@@ -220,7 +219,7 @@ export function CapawardsVotingFlow({
             onClick={handleSubmit}
             className="rounded-full bg-gold-500 text-navy-900 font-semibold px-6 py-2.5 hover:bg-gold-400 transition-colors"
           >
-            Enviar mi voto
+            Votar!
           </button>
         </div>
       </div>

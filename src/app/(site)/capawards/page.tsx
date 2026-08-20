@@ -74,7 +74,7 @@ export default async function CapawardsPage() {
 
     return (
       <PageShell>
-        <MessageCard emoji="✈️" title="Las votaciones aún no están abiertas">
+        <MessageCard emoji="✈️" title="Las votaciones no están abiertas">
           Siga disfrutando del vuelo y vuelva más tarde.
         </MessageCard>
       </PageShell>

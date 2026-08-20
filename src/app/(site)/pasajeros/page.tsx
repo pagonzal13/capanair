@@ -22,7 +22,7 @@ export default async function PasajerosPage() {
     <div className="mx-auto max-w-2xl px-4 py-10">
       <h1 className="font-display font-semibold text-2xl text-navy-800 mb-1">Pasajeros</h1>
       <p className="text-navy-500 text-sm mb-6">
-        Toda la tripulación de esta edición: su nivel Capanair Club y su habitación asignada.
+        Todo el pasaje y la tripulación de esta edición
       </p>
       <PassengerList passengers={passengers} />
     </div>

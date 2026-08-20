@@ -17,15 +17,15 @@ export default function AccesoPage({
     <main className="min-h-screen flex items-center justify-center bg-navy-800 px-4 py-10">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center gap-2 mb-6">
-          <Logo className="h-16 w-16" />
+          <Logo className="h-20 w-20" />
           <Wordmark className="text-2xl text-white" />
         </div>
-        <div className="bg-white rounded-2xl shadow-card p-8">
+        <div className="bg-white rounded-2xl shadow-card p-6">
           <h1 className="text-xl font-display font-semibold text-navy-800 text-center mb-1">
             Bienvenido/a a bordo
           </h1>
           <p className="text-sm text-navy-500 text-center mb-6">
-            Introduce la contraseña de embarque para acceder a Capanair.
+            Introduce la contraseña de embarque para acceder a Capanair
           </p>
           <form action={login} className="space-y-4">
             <input type="hidden" name="redirect" value={redirectTo} />

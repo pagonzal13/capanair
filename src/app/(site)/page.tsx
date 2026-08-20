@@ -25,10 +25,10 @@ export default async function HomePage() {
     <div>
       <section className="bg-navy-800 text-white">
         <div className="mx-auto max-w-5xl px-4 py-14 sm:py-20 flex flex-col items-center text-center gap-5">
-          <Logo className="h-16 w-16" />
+          <Logo className="h-22 w-22" />
           <Wordmark className="text-3xl sm:text-4xl" />
           <p className="uppercase tracking-[0.3em] text-gold-300 text-xs sm:text-sm">
-            Tarjeta de embarque · {EVENT_INFO.title}
+            Miembro de la alianza Capafest One World
           </p>
           <p className="max-w-xl text-white/80 text-sm sm:text-base">{EVENT_INFO.description}</p>
         </div>
@@ -55,10 +55,10 @@ export default async function HomePage() {
 
       <section className="mx-auto max-w-5xl px-4 py-10">
         <h2 className="font-display font-semibold text-xl text-navy-800 mb-1">
-          Panel de salidas y llegadas
+          Consulta el horario de nuestros vuelos
         </h2>
         <p className="text-navy-500 text-sm mb-6">
-          Todas las actividades del fin de semana, vuelo a vuelo.
+          Todo el finde, vuelo a vuelo.
         </p>
         <FlightBoard events={events} />
       </section>

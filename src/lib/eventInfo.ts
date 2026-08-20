@@ -1,17 +1,14 @@
-// Datos generales del evento. Edita estos valores con la informacion real
-// de tu Capafest antes de publicar (no requieren base de datos).
+// Datos generales del evento
 
 export const EVENT_INFO = {
-  title: "Capafest · Edición Viajes",
+  title: "Capanair",
   dateRange: "Viernes 28 – Domingo 30 de agosto de 2026",
-  // El horario menciona "Cuerva" como destino ("Lejos de Cuerva" en la
-  // despedida del domingo); completa la dirección exacta del alojamiento.
-  venueName: "Cuerva, Toledo",
-  venueAddress: "Completa aquí la dirección completa del alojamiento",
-  mapsUrl: "https://maps.google.com/?q=Cuerva,+Toledo",
+  venueName: "La Calancha, Cuerva",
+  venueAddress: "Carretera de Menasalbas a Cuerva, Km 6, 260, 45126 Cuerva, Toledo",
+  mapsUrl: "https://maps.app.goo.gl/qNgZKwtN8niGJKa3A",
   contactName: "Organización Capanair",
-  contactPhone: "+34 600 000 000",
-  contactEmail: "hola@capafest.example",
+  contactPhone: "+34 679 151 749",
+  contactEmail: "capafest@gmail.com",
   description:
-    "Este año Capafest despega hacia su 5ª edición con la temática Viajes. Prepara tu equipaje, tu mejor look de pasajero y embarca con nosotros en Capanair para un fin de semana inolvidable.",
+    "Este año el Capafest despega hacia su mejor edición. Prepara tu equipaje, tu mejor look de pasajero y embarca con nosotros en Capanair para un fin de semana inolvidable.",
 };
