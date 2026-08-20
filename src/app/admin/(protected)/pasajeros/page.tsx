@@ -1,4 +1,5 @@
 import { ConfirmSubmitButton } from "@/components/admin/ConfirmSubmitButton";
+import { ResettableForm } from "@/components/admin/ResettableForm";
 import { LoyaltyBadge } from "@/components/LoyaltyBadge";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import type { Passenger } from "@/lib/types";
@@ -26,7 +27,7 @@ export default async function AdminPasajerosPage() {
 
       <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-5 mb-8">
         <h2 className="font-display font-semibold text-navy-800 mb-4">Añadir pasajero</h2>
-        <form action={createPassenger} className="grid sm:grid-cols-3 gap-3">
+        <ResettableForm action={createPassenger} className="grid sm:grid-cols-3 gap-3">
           <div className="sm:col-span-2">
             <label className="block text-xs font-medium text-navy-500 mb-1">Nombre</label>
             <input type="text" name="full_name" required className={inputClass} />
@@ -59,7 +60,7 @@ export default async function AdminPasajerosPage() {
               Añadir
             </button>
           </div>
-        </form>
+        </ResettableForm>
       </div>
 
       <div className="space-y-3">

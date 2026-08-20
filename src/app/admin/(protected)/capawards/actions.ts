@@ -61,3 +61,16 @@ export async function publishResults() {
   if (error) throw error;
   refresh();
 }
+
+// Revierte la publicación: vuelve a ocultar los ganadores en la web
+// abierta. No toca los votos ni el ganador calculado de cada categoría,
+// solo el indicador que decide si se muestran públicamente.
+export async function hideResults() {
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase
+    .from("app_settings")
+    .update({ capawards_results_published: false, updated_at: new Date().toISOString() })
+    .eq("id", true);
+  if (error) throw error;
+  refresh();
+}

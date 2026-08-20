@@ -1,4 +1,5 @@
 import { ConfirmSubmitButton } from "@/components/admin/ConfirmSubmitButton";
+import { ResettableForm } from "@/components/admin/ResettableForm";
 import { DAY_LABELS } from "@/lib/loyalty";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import type { ScheduleDay, ScheduleEvent } from "@/lib/types";
@@ -30,7 +31,7 @@ export default async function AdminHorarioPage() {
 
       <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-5 mb-8">
         <h2 className="font-display font-semibold text-navy-800 mb-4">Añadir actividad</h2>
-        <form action={createScheduleEvent} className="grid sm:grid-cols-2 gap-3">
+        <ResettableForm action={createScheduleEvent} className="grid sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-medium text-navy-500 mb-1">Día</label>
             <select name="day" required defaultValue="viernes" className={inputClass}>
@@ -73,7 +74,7 @@ export default async function AdminHorarioPage() {
               Añadir
             </button>
           </div>
-        </form>
+        </ResettableForm>
       </div>
 
       <div className="space-y-8">

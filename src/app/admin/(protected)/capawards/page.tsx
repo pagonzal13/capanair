@@ -1,8 +1,10 @@
 import { ConfirmSubmitButton } from "@/components/admin/ConfirmSubmitButton";
+import { ResettableForm } from "@/components/admin/ResettableForm";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import {
   createCategory,
   deleteCategory,
+  hideResults,
   publishResults,
   setVotingOpen,
   updateCategory,
@@ -106,20 +108,31 @@ export default async function AdminCapawardsPage() {
             <span className="text-green-600 font-medium">Ya hay resultados publicados.</span>
           )}
         </p>
-        <form action={publishResults}>
-          <button
-            type="submit"
-            disabled={votingOpen}
-            className="rounded-full bg-gold-500 text-navy-900 text-sm font-semibold px-5 py-2.5 hover:bg-gold-400 transition-colors disabled:opacity-40 disabled:pointer-events-none"
-          >
-            Publicar resultados
-          </button>
-        </form>
+        {resultsPublished ? (
+          <form action={hideResults}>
+            <button
+              type="submit"
+              className="rounded-full bg-navy-700 text-white text-sm font-semibold px-5 py-2.5 hover:bg-navy-600 transition-colors"
+            >
+              Ocultar ganadores
+            </button>
+          </form>
+        ) : (
+          <form action={publishResults}>
+            <button
+              type="submit"
+              disabled={votingOpen}
+              className="rounded-full bg-gold-500 text-navy-900 text-sm font-semibold px-5 py-2.5 hover:bg-gold-400 transition-colors disabled:opacity-40 disabled:pointer-events-none"
+            >
+              Publicar resultados
+            </button>
+          </form>
+        )}
       </div>
 
       <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-5 mb-8">
         <h2 className="font-display font-semibold text-navy-800 mb-4">Nueva categoría</h2>
-        <form action={createCategory} className="grid sm:grid-cols-2 gap-3">
+        <ResettableForm action={createCategory} className="grid sm:grid-cols-2 gap-3">
           <div className="sm:col-span-2">
             <label className="block text-xs font-medium text-navy-500 mb-1">Nombre</label>
             <input type="text" name="name" required className={inputClass} />
@@ -140,7 +153,7 @@ export default async function AdminCapawardsPage() {
               Añadir categoría
             </button>
           </div>
-        </form>
+        </ResettableForm>
       </div>
 
       <div className="space-y-4">

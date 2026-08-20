@@ -46,6 +46,11 @@ export function CapawardsVotingFlow({
     [allPassengers, voterId]
   );
 
+  const eligibleIds = useMemo(
+    () => new Set(eligibleVoters.map((p) => p.id)),
+    [eligibleVoters]
+  );
+
   const topRef = useRef<HTMLDivElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -132,20 +137,28 @@ export function CapawardsVotingFlow({
             Todos los pasajeros ya han emitido su voto. ¡Gracias por participar!
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {eligibleVoters.map((p) => (
-              <button
-                key={p.id}
-                onClick={() => {
-                  setVoterId(p.id);
-                  setVotes({});
-                  goToCategory(0);
-                }}
-                className="text-left rounded-xl border border-navy-200 px-4 py-3 hover:border-gold-500 hover:bg-gold-50 transition-colors"
-              >
-                {p.full_name}
-              </button>
-            ))}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {allPassengers.map((p) => {
+              const canVote = eligibleIds.has(p.id);
+              return (
+                <button
+                  key={p.id}
+                  disabled={!canVote}
+                  onClick={() => {
+                    setVoterId(p.id);
+                    setVotes({});
+                    goToCategory(0);
+                  }}
+                  className={`rounded-2xl border p-4 text-center font-medium shadow-card transition-colors ${
+                    canVote
+                      ? "border-navy-100 bg-white hover:border-gold-500 hover:bg-gold-50 text-navy-800"
+                      : "border-navy-100 bg-navy-50 text-navy-300 cursor-not-allowed"
+                  }`}
+                >
+                  {p.full_name}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
@@ -156,7 +169,10 @@ export function CapawardsVotingFlow({
     const category = categories[step.index];
     const selected = votes[category.id];
     return (
-      <div ref={topRef} className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8">
+      <div
+        ref={topRef}
+        className="scroll-mt-24 bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8"
+      >
         <p className="text-xs font-medium uppercase tracking-wide text-gold-600 mb-1">
           Categoría {step.index + 1} de {categories.length}
         </p>
@@ -203,7 +219,10 @@ export function CapawardsVotingFlow({
 
   if (step.name === "review") {
     return (
-      <div ref={topRef} className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8">
+      <div
+        ref={topRef}
+        className="scroll-mt-24 bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8"
+      >
         <h2 className="font-display font-semibold text-xl text-navy-800 mb-1">
           Revisa tu voto, <span className="font-medium text-navy-700">{voter?.full_name}</span>.
         </h2>
