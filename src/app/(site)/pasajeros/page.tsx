@@ -9,13 +9,13 @@ export default async function PasajerosPage() {
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from("passengers")
-    .select("id, full_name, seat_code, editions_attended")
+    .select("id, full_name, seat_code, editions_attended, badges")
     .order("full_name");
 
   if (error) throw error;
   const passengers = (data ?? []) as Pick<
     Passenger,
-    "id" | "full_name" | "seat_code" | "editions_attended"
+    "id" | "full_name" | "seat_code" | "editions_attended" | "badges"
   >[];
 
   return (

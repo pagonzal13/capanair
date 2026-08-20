@@ -16,6 +16,7 @@ export async function createScheduleEvent(formData: FormData) {
     activity: String(formData.get("activity") ?? "").trim(),
     description: String(formData.get("description") ?? "").trim() || null,
     location: String(formData.get("location") ?? "").trim() || null,
+    icon: String(formData.get("icon") ?? "").trim() || null,
     sort_order: Number(formData.get("sort_order") ?? 0) || 0,
   });
   if (error) throw error;
@@ -33,6 +34,7 @@ export async function updateScheduleEvent(formData: FormData) {
       activity: String(formData.get("activity") ?? "").trim(),
       description: String(formData.get("description") ?? "").trim() || null,
       location: String(formData.get("location") ?? "").trim() || null,
+      icon: String(formData.get("icon") ?? "").trim() || null,
       sort_order: Number(formData.get("sort_order") ?? 0) || 0,
       updated_at: new Date().toISOString(),
     })

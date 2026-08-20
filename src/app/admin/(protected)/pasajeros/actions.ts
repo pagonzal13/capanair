@@ -10,12 +10,20 @@ function refresh() {
   revalidatePath("/admin");
 }
 
+function parseBadges(value: FormDataEntryValue | null): string[] {
+  return String(value ?? "")
+    .split(",")
+    .map((b) => b.trim())
+    .filter(Boolean);
+}
+
 export async function createPassenger(formData: FormData) {
   const supabase = getSupabaseAdmin();
   const { error } = await supabase.from("passengers").insert({
     full_name: String(formData.get("full_name") ?? "").trim(),
     seat_code: String(formData.get("seat_code") ?? "").trim() || null,
     editions_attended: Number(formData.get("editions_attended") ?? 1) || 1,
+    badges: parseBadges(formData.get("badges")),
   });
   if (error) throw error;
   refresh();
@@ -30,6 +38,7 @@ export async function updatePassenger(formData: FormData) {
       full_name: String(formData.get("full_name") ?? "").trim(),
       seat_code: String(formData.get("seat_code") ?? "").trim() || null,
       editions_attended: Number(formData.get("editions_attended") ?? 1) || 1,
+      badges: parseBadges(formData.get("badges")),
       updated_at: new Date().toISOString(),
     })
     .eq("id", id);

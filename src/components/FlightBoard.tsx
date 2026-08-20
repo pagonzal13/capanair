@@ -12,9 +12,7 @@ export function FlightBoard({ events }: { events: ScheduleEvent[] }) {
       day,
       items: events
         .filter((event) => event.day === day)
-        .sort(
-          (a, b) => a.event_time.localeCompare(b.event_time) || a.sort_order - b.sort_order
-        ),
+        .sort((a, b) => a.sort_order - b.sort_order || a.event_time.localeCompare(b.event_time)),
     }))
     .filter((group) => group.items.length > 0);
 
@@ -56,7 +54,14 @@ export function FlightBoard({ events }: { events: ScheduleEvent[] }) {
                     {formatTime(event.event_time)}
                   </td>
                   <td className="px-4 py-3">
-                    <div className="font-medium">{event.activity}</div>
+                    <div className="font-medium">
+                      {event.icon && (
+                        <span className="mr-1.5" aria-hidden>
+                          {event.icon}
+                        </span>
+                      )}
+                      {event.activity}
+                    </div>
                     {event.description && (
                       <div className="text-white/50 text-xs mt-0.5 font-sans">
                         {event.description}

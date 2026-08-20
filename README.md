@@ -5,12 +5,15 @@ web de una aerolínea ficticia llamada **Capanair**. Construida con
 **Next.js 14 (App Router) + TypeScript + Tailwind CSS**, alojada en
 **Vercel** y con **Supabase** (Postgres) como base de datos.
 
-> ⚠️ **Nota sobre el logo y los datos reales**: esta app se ha generado sin
-> acceso a los ficheros adjuntos (logo de la aerolínea y Excel de
-> pasajeros/horario/habitaciones), así que incluye un logo placeholder
-> (`src/components/Logo.tsx`, generado a partir de la paleta de colores) y
-> datos de ejemplo (`supabase/migrations/0002_seed.sql`). Antes de
-> compartir la web con los invitados, sustituye ambas cosas — ver más abajo.
+> ⚠️ **Nota sobre el logo**: los pasajeros y el horario ya son los reales,
+> importados desde `Management_Capanair_Edition.xlsx`
+> (`supabase/migrations/0003_seed.sql`). El logo, en cambio, llegó pegado
+> directamente en el chat (no como fichero adjunto descargable), así que no
+> se ha podido guardar el archivo de imagen en este entorno: la paleta de
+> colores (navy + dorado + un acento coral tomado de las gafas de sol y el
+> hibisco del logo) sí está aplicada en `tailwind.config.ts`, pero
+> `src/components/Logo.tsx` sigue siendo un SVG placeholder con esos
+> colores. Sustitúyelo por la imagen real — ver más abajo.
 
 ## Qué incluye
 
@@ -48,10 +51,12 @@ web de una aerolínea ficticia llamada **Capanair**. Construida con
 2. Ve a **SQL Editor** y ejecuta, en este orden, el contenido de:
    - `supabase/migrations/0001_init.sql` (tablas, función de voto atómico,
      función de publicación de resultados, RLS)
-   - `supabase/migrations/0002_seed.sql` (datos de ejemplo — opcional,
-     puedes saltarlo si vas a cargar tú los pasajeros/horario reales desde
-     el panel de administración)
-   - `supabase/migrations/0003_tally_view.sql` (vista de recuento de votos,
+   - `supabase/migrations/0002_content_extras.sql` (columnas `badges` en
+     pasajeros e `icon` en el horario, usadas por los datos reales)
+   - `supabase/migrations/0003_seed.sql` (pasajeros y horario **reales**,
+     importados de tu Excel de gestión; sáltalo solo si prefieres cargarlos
+     tú a mano desde `/admin`)
+   - `supabase/migrations/0004_tally_view.sql` (vista de recuento de votos,
      usada por el panel de admin)
 3. Ve a **Project Settings → API** y copia:
    - **Project URL** → `SUPABASE_URL`
@@ -89,24 +94,38 @@ Abre `http://localhost:3000`. Te redirigirá a `/acceso`; entra con
 `SITE_PASSWORD`. El panel de administración está en
 `http://localhost:3000/admin` (contraseña `ADMIN_PASSWORD`, independiente).
 
-## 5. Cargar tus datos reales
+## 5. Datos reales y logo
 
-Cuando tengas el Excel real de pasajeros/habitaciones/horario, tienes dos
-opciones:
+Los 36 pasajeros (con su habitación y ediciones asistidas) y las 24
+actividades del horario ya están cargados en
+`supabase/migrations/0003_seed.sql`, tal cual estaban en tu Excel de
+gestión — incluidas las etiquetas de pasajero (`Organización`, `DJ`, ...,
+visibles como chips junto al nombre en `/pasajeros`) y el emoji de cada
+actividad del horario. Para futuros cambios (altas/bajas, nuevas
+actividades) ya no hace falta tocar SQL: usa `/admin/pasajeros` y
+`/admin/horario`.
 
-- **Manual, desde `/admin`** (recomendado si son pocos cambios): añade
-  pasajeros en `/admin/pasajeros` y actividades del horario en
-  `/admin/horario`.
-- **Por SQL**: exporta el Excel a CSV y usa el SQL Editor de Supabase con
-  `insert into passengers (full_name, seat_code, editions_attended) values (...);`
-  y lo equivalente para `schedule_events`. Revisa `0002_seed.sql` como
-  plantilla y bórralo/sustitúyelo cuando ya no lo necesites.
+Cosas que siguen pendientes de completar a mano porque el Excel no las
+traía:
+- **Dirección exacta del alojamiento** en `src/lib/eventInfo.ts`
+  (`venueAddress`) — el horario solo menciona "Cuerva" como destino.
+- **Teléfono/email de contacto** en el mismo fichero.
 
-Para el logo: sustituye `src/components/Logo.tsx` por tu logo real (por
-ejemplo, colocando el fichero en `/public/logo.svg` o `/public/logo.png` y
-usando `<Image src="/logo.svg" ... />` en su lugar). Se usa en la barra de
-navegación y en `/acceso`. La paleta de colores (navy + dorado) está en
-`tailwind.config.ts`; ajústala si tu logo real tiene otros colores.
+Para el logo: la paleta de colores (navy + dorado + un acento coral
+tomado de las gafas de sol y la flor de hibisco del logo) ya está aplicada
+en `tailwind.config.ts` y en `src/components/Logo.tsx` (un SVG
+placeholder). La imagen real del logo no se pudo incrustar porque llegó
+pegada en el chat, no como archivo adjunto — guárdala como
+`/public/logo.png` (o `.svg`) y sustituye `Logo.tsx` por, por ejemplo:
+
+```tsx
+import Image from "next/image";
+export function Logo({ className }: { className?: string }) {
+  return <Image src="/logo.png" alt="Capanair" width={64} height={64} className={className} />;
+}
+```
+
+Se usa en la barra de navegación y en `/acceso`.
 
 Los datos generales del evento (fechas, lugar, contacto) están en
 `src/lib/eventInfo.ts` — edítalos directamente, no requieren base de datos.

@@ -31,6 +31,22 @@ const config: Config = {
           800: "#54421D",
           900: "#2A210E",
         },
+        // Acento coral/rosa tomado de los detalles del logo (gafas de sol,
+        // flor de hibisco): se usa con moderación, para etiquetas y detalles
+        // festivos que rompan el navy/dorado de aerolinea.
+        coral: {
+          DEFAULT: "#E0447E",
+          50: "#FDF0F5",
+          100: "#FBDCE8",
+          200: "#F5B3CD",
+          300: "#EE8AB2",
+          400: "#E75F97",
+          500: "#E0447E",
+          600: "#C22A62",
+          700: "#951F4B",
+          800: "#671535",
+          900: "#3A0C1E",
+        },
         sky: {
           light: "#EAF2FB",
         },

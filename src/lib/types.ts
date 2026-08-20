@@ -5,6 +5,7 @@ export interface Passenger {
   full_name: string;
   seat_code: string | null;
   editions_attended: number;
+  badges: string[];
   is_dead: boolean;
   died_at: string | null;
   created_at: string;
@@ -20,6 +21,7 @@ export interface ScheduleEvent {
   activity: string;
   description: string | null;
   location: string | null;
+  icon: string | null;
   sort_order: number;
 }
 

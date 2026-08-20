@@ -46,6 +46,12 @@ export default async function AdminPasajerosPage() {
             />
           </div>
           <div className="sm:col-span-3">
+            <label className="block text-xs font-medium text-navy-500 mb-1">
+              Etiquetas (separadas por comas, opcional)
+            </label>
+            <input type="text" name="badges" placeholder="Organización, DJ" className={inputClass} />
+          </div>
+          <div className="sm:col-span-3">
             <button
               type="submit"
               className="rounded-full bg-navy-700 text-white font-medium px-6 py-2.5 hover:bg-navy-600 transition-colors"
@@ -79,6 +85,17 @@ export default async function AdminPasajerosPage() {
                 name="editions_attended"
                 min={0}
                 defaultValue={p.editions_attended}
+                className={inputClass}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-medium text-navy-500 mb-1">
+                Etiquetas (separadas por comas)
+              </label>
+              <input
+                type="text"
+                name="badges"
+                defaultValue={p.badges.join(", ")}
                 className={inputClass}
               />
             </div>

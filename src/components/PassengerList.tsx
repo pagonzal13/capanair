@@ -8,6 +8,7 @@ export interface PassengerListItem {
   full_name: string;
   seat_code: string | null;
   editions_attended: number;
+  badges: string[];
 }
 
 export function PassengerList({ passengers }: { passengers: PassengerListItem[] }) {
@@ -43,8 +44,16 @@ export function PassengerList({ passengers }: { passengers: PassengerListItem[] 
           <li key={p.id} className="flex items-center justify-between gap-3 px-4 py-3">
             <div className="min-w-0">
               <div className="font-medium text-navy-800 truncate">{p.full_name}</div>
-              <div className="mt-1">
+              <div className="mt-1 flex flex-wrap items-center gap-1.5">
                 <LoyaltyBadge editionsAttended={p.editions_attended} />
+                {p.badges.map((badge) => (
+                  <span
+                    key={badge}
+                    className="inline-flex items-center rounded-full bg-coral-100 text-coral-700 border border-coral-200 px-2.5 py-1 text-xs font-medium"
+                  >
+                    {badge}
+                  </span>
+                ))}
               </div>
             </div>
             {p.seat_code && (

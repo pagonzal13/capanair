@@ -146,7 +146,7 @@ begin
       nominee_passenger_id
     from capawards_votes
     group by category_id, nominee_passenger_id
-    order by category_id, count(*) desc, min(id) asc
+    order by category_id, count(*) desc, min(id::text) asc
   ) w
   where c.id = w.category_id;
 

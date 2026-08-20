@@ -58,6 +58,10 @@ export default async function AdminHorarioPage() {
             <input type="text" name="location" className={inputClass} />
           </div>
           <div>
+            <label className="block text-xs font-medium text-navy-500 mb-1">Icono (emoji)</label>
+            <input type="text" name="icon" maxLength={4} placeholder="🎉" className={inputClass} />
+          </div>
+          <div>
             <label className="block text-xs font-medium text-navy-500 mb-1">Orden</label>
             <input type="number" name="sort_order" defaultValue={0} className={inputClass} />
           </div>
@@ -138,6 +142,18 @@ export default async function AdminHorarioPage() {
                         type="text"
                         name="location"
                         defaultValue={event.location ?? ""}
+                        className={inputClass}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-navy-500 mb-1">
+                        Icono (emoji)
+                      </label>
+                      <input
+                        type="text"
+                        name="icon"
+                        maxLength={4}
+                        defaultValue={event.icon ?? ""}
                         className={inputClass}
                       />
                     </div>
