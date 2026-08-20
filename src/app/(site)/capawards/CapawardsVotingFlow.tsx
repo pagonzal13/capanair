@@ -125,7 +125,7 @@ export function CapawardsVotingFlow({
           Selecciona el pasajero
         </h2>
         <p className="text-navy-500 text-sm mb-5">
-          Haz click sobre tu nombre en la lista para empezar la votación
+          Haz click sobre 𝐭𝐮 𝐧𝐨𝐦𝐛𝐫𝐞 en la lista para empezar la votación
         </p>
         {eligibleVoters.length === 0 ? (
           <p className="text-navy-500 text-sm">

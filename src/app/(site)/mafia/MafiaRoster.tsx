@@ -82,11 +82,11 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
           <div
             key={p.id}
             className={`rounded-2xl border p-4 text-center shadow-card transition-colors ${
-              p.is_dead ? "bg-navy-50 border-navy-100" : "bg-white border-navy-100"
+              p.is_dead ? "bg-red-300 border-red-600" : "bg-navy-200 border-gold-200"
             }`}
           >
             <div
-              className={`font-display font-semibold ${
+              className={`font-display font-semibold text-lg ${
                 p.is_dead ? "line-through text-navy-400" : "text-navy-800"
               }`}
             >
@@ -94,12 +94,12 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
             </div>
             <div className="mt-2">
               {p.is_dead ? (
-                <span className="inline-flex items-center gap-1 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded-full px-2.5 py-1">
-                  💀 Eliminado/a
+                <span className="inline-flex items-center gap-1 text-m font-medium text-red-600">
+                  ☠️ Eliminado/a
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 text-xs font-medium text-navy-600 bg-gold-50 border border-gold-200 rounded-full px-2.5 py-1">
-                  🤫 Sigue en la partida
+                <span className="inline-flex items-center gap-1 text-m font-medium text-navy-600">
+                  😎 Jugando
                 </span>
               )}
             </div>
@@ -119,14 +119,14 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
             <h2 className="font-display font-semibold text-2xl text-navy-800 mb-3">
               {modalNames.length === 1 ? "Nueva víctima" : "Nuevas víctimas"}
             </h2>
-            <ul className="text-navy-700 font-medium text-lg space-y-1 mb-6">
+            <ul className="text-navy-700 font-medium text-lg space-y-1 mb-6 max-h-36 overflow-y-auto">
               {modalNames.map((name, i) => (
                 <li key={`${name}-${i}`}>{name}</li>
               ))}
             </ul>
             <button
               onClick={() => setModalNames([])}
-              className="rounded-full bg-navy-700 text-white font-medium px-6 py-2.5 hover:bg-navy-600 transition-colors"
+              className="rounded-full bg-red-500 text-white font-medium px-6 py-2.5 hover:bg-navy-600 transition-colors"
             >
               Cerrar
             </button>

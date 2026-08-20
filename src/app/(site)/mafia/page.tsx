@@ -82,7 +82,7 @@ export default async function MafiaPage() {
       </div>
 
       <h2 className="font-display font-semibold text-lg text-navy-800 mb-3">
-        Recuento de víctimas
+        Recuento de víctimas:
       </h2>
       <MafiaRoster initialPassengers={data ?? []} />
     </div>

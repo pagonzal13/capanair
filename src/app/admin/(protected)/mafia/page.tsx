@@ -39,7 +39,7 @@ export default async function AdminMafiaPage() {
                     : "bg-red-600 text-white hover:bg-red-500"
                 }`}
               >
-                {p.is_dead ? "Revivir" : "Marcar eliminado/a"}
+                {p.is_dead ? "Revivir" : "Eliminar"}
               </button>
             </form>
           </li>
