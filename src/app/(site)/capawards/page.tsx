@@ -43,9 +43,9 @@ export default async function CapawardsPage() {
       return (
         <PageShell>
           <h1 className="font-display font-semibold text-2xl text-navy-800 mb-1">
-            Ganadores de los Capawards 🏆
+          ✨ Galardonados ✨
           </h1>
-          <p className="text-navy-500 text-sm mb-6">Estos son los personajes más destacados de esta edición.</p>
+          <p className="text-navy-500 text-sm mb-6">Estos han sido los personajes más destacados de esta edición</p>
           <ul className="space-y-3">
             {(categories ?? []).map((c) => {
               const winnerName = (c as unknown as { passengers: { full_name: string } | null }).passengers

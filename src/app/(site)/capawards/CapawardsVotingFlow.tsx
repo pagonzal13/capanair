@@ -122,10 +122,10 @@ export function CapawardsVotingFlow({
     return (
       <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8">
         <h2 className="font-display font-semibold text-lg text-navy-800 mb-1">
-          Selecciona el pasajero
+          📩 Selecciona el pasajero que va a votar
         </h2>
         <p className="text-navy-500 text-sm mb-5">
-          Haz click sobre 𝐭𝐮 𝐧𝐨𝐦𝐛𝐫𝐞 en la lista para empezar la votación
+          Haz click sobre 𝐭𝐮 𝐧𝐨𝐦𝐛𝐫𝐞 en la lista para empezar
         </p>
         {eligibleVoters.length === 0 ? (
           <p className="text-navy-500 text-sm">
