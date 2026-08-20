@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+.flight-board {
+  background-image: radial-gradient(circle at 1px 1px, rgba(201, 162, 75, 0.15) 1px, transparent 0);
+  background-size: 10px 10px;
+}
