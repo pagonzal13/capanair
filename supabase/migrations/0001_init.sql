@@ -9,7 +9,7 @@ create extension if not exists pgcrypto;
 create table if not exists passengers (
   id uuid primary key default gen_random_uuid(),
   full_name text not null,
-  seat_code text,                          -- p.ej. "2A", "4F" (habitacion)
+  seat_code text,                          -- p.ej. "A2", "C4" (habitacion)
   editions_attended int not null default 1 check (editions_attended >= 0),
   is_dead boolean not null default false,  -- estado en el juego "La Mafia"
   died_at timestamptz,

@@ -55,7 +55,7 @@ export default async function HomePage() {
 
       <section className="mx-auto max-w-5xl px-4 py-10">
         <h2 className="font-display font-semibold text-xl text-navy-800 mb-1">
-          Consulta el horario de nuestros vuelos
+          📅 Consulta el horario de nuestros vuelos
         </h2>
         <p className="text-navy-500 text-sm mb-6">
           Todo el finde, vuelo a vuelo.

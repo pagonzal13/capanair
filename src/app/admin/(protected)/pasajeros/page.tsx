@@ -25,7 +25,7 @@ export default async function AdminPasajerosPage() {
         partir de las ediciones a las que han venido.
       </p>
 
-      <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-5 mb-8">
+      <div className="bg-navy-100 rounded-2xl shadow-card border border-navy-100 p-5 mb-8">
         <h2 className="font-display font-semibold text-navy-800 mb-4">Añadir pasajero</h2>
         <ResettableForm action={createPassenger} className="grid sm:grid-cols-3 gap-3">
           <div className="sm:col-span-2">
@@ -34,7 +34,7 @@ export default async function AdminPasajerosPage() {
           </div>
           <div>
             <label className="block text-xs font-medium text-navy-500 mb-1">Habitación</label>
-            <input type="text" name="seat_code" placeholder="p. ej. 2A" className={inputClass} />
+            <input type="text" name="seat_code" placeholder="p. ej. A2" className={inputClass} />
           </div>
           <div>
             <label className="block text-xs font-medium text-navy-500 mb-1">Ediciones</label>

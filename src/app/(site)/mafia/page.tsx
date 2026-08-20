@@ -15,7 +15,7 @@ export default async function MafiaPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="font-display font-semibold text-2xl text-navy-800 mb-1">🎯 La Mafia 🎯</h1>
+      <h1 className="font-display font-semibold text-2xl text-navy-800 mb-1">🎯 La Mafia</h1>
       <p className="text-navy-500 text-sm mb-6">
         Cuando acabe el fin de semana...sólo podrá quedar uno 🔪
       </p>

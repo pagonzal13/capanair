@@ -29,7 +29,7 @@ export default async function AdminHorarioPage() {
         Gestiona el panel de salidas y llegadas que ven los pasajeros en la web.
       </p>
 
-      <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-5 mb-8">
+      <div className="bg-navy-100 rounded-2xl shadow-card border border-navy-100 p-5 mb-8">
         <h2 className="font-display font-semibold text-navy-800 mb-4">Añadir actividad</h2>
         <ResettableForm action={createScheduleEvent} className="grid sm:grid-cols-2 gap-3">
           <div>
@@ -172,7 +172,7 @@ export default async function AdminHorarioPage() {
                         type="submit"
                         className="rounded-full bg-navy-700 text-white text-sm font-medium px-5 py-2 hover:bg-navy-600 transition-colors"
                       >
-                        Guardar cambios
+                        Guardar
                       </button>
                       <ConfirmSubmitButton
                         message={`¿Eliminar «${event.activity}»?`}

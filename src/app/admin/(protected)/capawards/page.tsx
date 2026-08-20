@@ -130,7 +130,7 @@ export default async function AdminCapawardsPage() {
         )}
       </div>
 
-      <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-5 mb-8">
+      <div className="bg-navy-100 rounded-2xl shadow-card border border-navy-100 p-5 mb-8">
         <h2 className="font-display font-semibold text-navy-800 mb-4">Nueva categoría</h2>
         <ResettableForm action={createCategory} className="grid sm:grid-cols-2 gap-3">
           <div className="sm:col-span-2">
@@ -188,7 +188,7 @@ export default async function AdminCapawardsPage() {
                   type="submit"
                   className="rounded-full bg-navy-700 text-white text-sm font-medium px-5 py-2 hover:bg-navy-600 transition-colors"
                 >
-                  Guardar cambios
+                  Guardar
                 </button>
                 <ConfirmSubmitButton
                   message={`¿Eliminar la categoría «${category.name}»? Se borrarán también sus votos.`}

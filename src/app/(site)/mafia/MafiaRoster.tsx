@@ -94,11 +94,11 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
             </div>
             <div className="mt-2">
               {p.is_dead ? (
-                <span className="inline-flex items-center gap-1 text-m font-medium text-red-600">
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-red-600">
                   ☠️ Eliminado/a
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 text-m font-medium text-navy-600">
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-navy-600">
                   😎 Jugando
                 </span>
               )}

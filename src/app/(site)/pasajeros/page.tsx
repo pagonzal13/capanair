@@ -20,7 +20,7 @@ export default async function PasajerosPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="font-display font-semibold text-2xl text-navy-800 mb-1">Pasajeros</h1>
+      <h1 className="font-display font-semibold text-2xl text-navy-800 mb-1">👤 Pasajeros</h1>
       <p className="text-navy-500 text-sm mb-6">
         Todo el pasaje y la tripulación de esta edición
       </p>

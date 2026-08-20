@@ -151,8 +151,8 @@ export function CapawardsVotingFlow({
                   }}
                   className={`rounded-2xl border p-4 text-center font-medium shadow-card transition-colors ${
                     canVote
-                      ? "border-navy-100 bg-white hover:border-gold-500 hover:bg-gold-50 text-navy-800"
-                      : "border-navy-100 bg-navy-50 text-navy-300 cursor-not-allowed"
+                      ? "border-navy-300 bg-navy-100 hover:border-gold-500 hover:bg-gold-50 text-navy-500"
+                      : "border-grey-400 bg-grey-200 text-grey-400 cursor-not-allowed"
                   }`}
                 >
                   {p.full_name}
@@ -224,7 +224,7 @@ export function CapawardsVotingFlow({
         className="scroll-mt-24 bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8"
       >
         <h2 className="font-display font-semibold text-xl text-navy-800 mb-1">
-          Revisa tu voto, <span className="font-medium text-navy-700">{voter?.full_name}</span>.
+          Revisa antes de votar, <span className="font-medium text-gold-700">{voter?.full_name}</span>.
         </h2>
         <p className="text-navy-500 text-sm mb-5"> 
           Toca una categoría para cambiar tu elección.
@@ -238,9 +238,9 @@ export function CapawardsVotingFlow({
               <li key={c.id}>
                 <button
                   onClick={() => goToCategory(i)}
-                  className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left hover:bg-navy-50 transition-colors"
+                  className="w-full flex items-center justify-between gap-3 px-2 py-3 text-left hover:bg-navy-50 transition-colors"
                 >
-                  <span className="text-navy-600 text-sm">{c.name}</span>
+                  <span className="text-navy-600 text-sm">{c.name}:</span>
                   <span className="font-medium text-navy-800">{nominee?.full_name ?? "—"}</span>
                 </button>
               </li>

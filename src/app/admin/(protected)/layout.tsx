@@ -19,7 +19,7 @@ export default async function AdminProtectedLayout({
     <div className="min-h-screen bg-navy-50">
       <header className="bg-navy-900 text-white">
         <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between flex-wrap gap-3">
-          <span className="font-display font-semibold">Panel de administración · Capanair</span>
+          <span className="font-display font-semibold text-xl">Panel de administración</span>
           <AdminNav logoutAction={adminLogout} />
         </div>
       </header>
