@@ -1,6 +1,6 @@
 import { adminLogin } from "./actions";
 
-export const metadata = { title: "Admin | Capanair" };
+export const metadata = { title: "Admin · Login" };
 
 export default function AdminLoginPage({
   searchParams,

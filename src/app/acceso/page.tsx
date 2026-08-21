@@ -2,7 +2,7 @@ import { Logo, Wordmark } from "@/components/Logo";
 import { login } from "./actions";
 
 export const metadata = {
-  title: "Acceso | Capanair",
+  title: "Login",
 };
 
 export default function AccesoPage({

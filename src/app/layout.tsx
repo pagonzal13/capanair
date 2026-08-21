@@ -16,10 +16,10 @@ const mono = Roboto_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Capanair | Capafest",
+    default: "Capanair",
     template: "%s | Capanair",
   },
-  description: "Tu aerolínea para esta edición de Capafest: viajes.",
+  description: "Tu aerolínea para esta edición del Capafest.",
 };
 
 export const viewport: Viewport = {
