@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { passengerPhotoUrl } from "@/lib/passengerPhoto";
 import { submitCapawardsBallot } from "./actions";
 
 interface Person {
@@ -12,6 +13,49 @@ interface Category {
   id: string;
   name: string;
   description: string | null;
+}
+
+function IdentityCard({
+  person,
+  canVote,
+  onSelect,
+}: {
+  person: Person;
+  canVote: boolean;
+  onSelect: () => void;
+}) {
+  const [broken, setBroken] = useState(false);
+
+  return (
+    <button
+      type="button"
+      disabled={!canVote}
+      onClick={onSelect}
+      className={`group relative aspect-square rounded-2xl overflow-hidden border shadow-card transition-colors ${
+        canVote ? "border-navy-200 hover:border-gold-500" : "border-navy-200 cursor-not-allowed"
+      }`}
+    >
+      {!broken && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={passengerPhotoUrl(person.full_name)}
+          alt=""
+          onError={() => setBroken(true)}
+          className="absolute inset-0 h-full w-full object-cover opacity-40"
+        />
+      )}
+      <div
+        className={`absolute inset-0 transition-colors ${
+          canVote ? "bg-navy-800/50 group-hover:bg-gold-600/40" : "bg-navy-400/70"
+        }`}
+      />
+      <div className="relative z-10 flex h-full items-center justify-center p-2 text-center">
+        <span className={`font-display font-semibold ${canVote ? "text-white" : "text-white/70"}`}>
+          {person.full_name}
+        </span>
+      </div>
+    </button>
+  );
 }
 
 type Step =
@@ -138,27 +182,18 @@ export function CapawardsVotingFlow({
           </p>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {allPassengers.map((p) => {
-              const canVote = eligibleIds.has(p.id);
-              return (
-                <button
-                  key={p.id}
-                  disabled={!canVote}
-                  onClick={() => {
-                    setVoterId(p.id);
-                    setVotes({});
-                    goToCategory(0);
-                  }}
-                  className={`rounded-2xl border p-4 text-center font-medium shadow-card transition-colors ${
-                    canVote
-                      ? "border-navy-300 bg-navy-100 hover:border-gold-500 hover:bg-gold-50 text-navy-500"
-                      : "border-grey-400 bg-grey-200 text-grey-400 cursor-not-allowed"
-                  }`}
-                >
-                  {p.full_name}
-                </button>
-              );
-            })}
+            {allPassengers.map((p) => (
+              <IdentityCard
+                key={p.id}
+                person={p}
+                canVote={eligibleIds.has(p.id)}
+                onSelect={() => {
+                  setVoterId(p.id);
+                  setVotes({});
+                  goToCategory(0);
+                }}
+              />
+            ))}
           </div>
         )}
       </div>

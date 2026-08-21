@@ -1,11 +1,48 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { passengerPhotoUrl } from "@/lib/passengerPhoto";
 
 interface PassengerStatus {
   id: string;
   full_name: string;
   is_dead: boolean;
+}
+
+function MafiaCard({ passenger }: { passenger: PassengerStatus }) {
+  const [broken, setBroken] = useState(false);
+  const photoSrc = passenger.is_dead ? "/mafia-victim-placeholder.png" : passengerPhotoUrl(passenger.full_name);
+
+  return (
+    <div
+      className={`relative aspect-square rounded-2xl overflow-hidden border shadow-card ${
+        passenger.is_dead ? "border-red-700" : "border-emerald-600"
+      }`}
+    >
+      {!broken && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={photoSrc}
+          alt=""
+          onError={() => setBroken(true)}
+          className="absolute inset-0 h-full w-full object-cover opacity-40"
+        />
+      )}
+      <div className={`absolute inset-0 ${passenger.is_dead ? "bg-red-600/70" : "bg-emerald-700/60"}`} />
+      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-1 p-2 text-center">
+        <span
+          className={`font-display font-bold text-white ${passenger.is_dead ? "line-through" : ""}`}
+        >
+          {passenger.full_name}
+        </span>
+        {passenger.is_dead ? (
+          <span className="text-xs font-medium text-white/90">💀 Eliminado/a</span>
+        ) : (
+          <span className="text-xs font-medium text-white/90">😎 Jugando</span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 const STORAGE_KEY = "capafest_mafia_notified_deaths";
@@ -79,31 +116,7 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
     <div>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {sorted.map((p) => (
-          <div
-            key={p.id}
-            className={`rounded-2xl border p-4 text-center shadow-card transition-colors ${
-              p.is_dead ? "bg-red-300 border-red-600" : "bg-navy-200 border-gold-200"
-            }`}
-          >
-            <div
-              className={`font-display font-semibold text-lg ${
-                p.is_dead ? "line-through text-navy-400" : "text-navy-800"
-              }`}
-            >
-              {p.full_name}
-            </div>
-            <div className="mt-2">
-              {p.is_dead ? (
-                <span className="inline-flex items-center gap-1 text-xs font-medium text-red-600">
-                  ☠️ Eliminado/a
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 text-xs font-medium text-navy-600">
-                  😎 Jugando
-                </span>
-              )}
-            </div>
-          </div>
+          <MafiaCard key={p.id} passenger={p} />
         ))}
       </div>
 

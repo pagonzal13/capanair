@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { LoyaltyBadge } from "./LoyaltyBadge";
+import { PassengerAvatar } from "./PassengerAvatar";
 
 export interface PassengerListItem {
   id: string;
@@ -42,18 +43,21 @@ export function PassengerList({ passengers }: { passengers: PassengerListItem[] 
       <ul className="divide-y divide-navy-100 rounded-2xl border border-navy-100 bg-white shadow-card overflow-hidden">
         {filtered.map((p) => (
           <li key={p.id} className="flex items-center justify-between gap-3 px-4 py-3">
-            <div className="min-w-0">
-              <div className="font-medium text-navy-800 truncate">{p.full_name}</div>
-              <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                <LoyaltyBadge editionsAttended={p.editions_attended} />
-                {p.badges.map((badge) => (
-                  <span
-                    key={badge}
-                    className="inline-flex items-center rounded-full bg-coral-100 text-coral-700 border border-coral-200 px-2.5 py-1 text-xs font-medium"
-                  >
-                    {badge}
-                  </span>
-                ))}
+            <div className="flex items-center gap-3 min-w-0">
+              <PassengerAvatar name={p.full_name} className="h-10 w-10" />
+              <div className="min-w-0">
+                <div className="font-medium text-navy-800 truncate">{p.full_name}</div>
+                <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                  <LoyaltyBadge editionsAttended={p.editions_attended} />
+                  {p.badges.map((badge) => (
+                    <span
+                      key={badge}
+                      className="inline-flex items-center rounded-full bg-coral-100 text-coral-700 border border-coral-200 px-2.5 py-1 text-xs font-medium"
+                    >
+                      {badge}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
             {p.seat_code && (
