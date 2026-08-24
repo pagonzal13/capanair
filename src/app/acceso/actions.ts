@@ -29,5 +29,5 @@ export async function login(formData: FormData) {
     path: "/",
   });
 
-  redirect(redirectTo);
+  redirect(`/cargando?redirect=${encodeURIComponent(redirectTo)}`);
 }
