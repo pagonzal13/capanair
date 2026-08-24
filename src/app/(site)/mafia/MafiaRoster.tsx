@@ -11,7 +11,7 @@ interface PassengerStatus {
 
 function MafiaCard({ passenger }: { passenger: PassengerStatus }) {
   const [broken, setBroken] = useState(false);
-  const photoSrc = passenger.is_dead ? "/mafia-victim-placeholder.png" : passengerPhotoUrl(passenger.full_name);
+  const photoSrc = passenger.is_dead ? "/mafia-victim-placeholder.jpg" : passengerPhotoUrl(passenger.full_name);
 
   return (
     <div
@@ -25,20 +25,20 @@ function MafiaCard({ passenger }: { passenger: PassengerStatus }) {
           src={photoSrc}
           alt=""
           onError={() => setBroken(true)}
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          className="absolute inset-0 h-full w-full object-cover opacity-80"
         />
       )}
       <div className={`absolute inset-0 ${passenger.is_dead ? "bg-red-600/70" : "bg-emerald-700/60"}`} />
-      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-1 p-2 text-center">
+      <div className="relative z-10 flex h-full flex-col items-center justify-end p-2 text-center">
         <span
           className={`font-display font-bold text-white ${passenger.is_dead ? "line-through" : ""}`}
         >
           {passenger.full_name}
         </span>
         {passenger.is_dead ? (
-          <span className="text-xs font-medium text-white/90">💀 Eliminado/a</span>
+          <span className="text-xs font-medium text-white/90">🔴 Eliminado/a</span>
         ) : (
-          <span className="text-xs font-medium text-white/90">😎 Jugando</span>
+          <span className="text-xs font-medium text-white/90">🟢 Jugando</span>
         )}
       </div>
     </div>
@@ -125,14 +125,17 @@ export function MafiaRoster({ initialPassengers }: { initialPassengers: Passenge
           <div className="mafia-modal-card bg-white rounded-2xl shadow-card max-w-sm w-full p-6 text-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/mafia-victim-placeholder.png"
+              src="/mafia-victim-placeholder-1.png"
               alt=""
               className="w-32 h-32 mx-auto mb-4 drop-shadow-lg"
             />
             <h2 className="font-display font-semibold text-2xl text-navy-800 mb-3">
-              {modalNames.length === 1 ? "Nueva víctima" : "Nuevas víctimas"}
+              ⚠️NOVEDADES⚠️
             </h2>
-            <ul className="text-navy-700 font-medium text-lg space-y-1 mb-6 max-h-36 overflow-y-auto">
+            <p className="font-display font-semibold text-navy-700 mb-3">
+              {modalNames.length === 1 ? "Ha muerto:" : "Han muerto:"}
+            </p>
+            <ul className="text-navy-300 font-medium text-lg space-y-1 mb-6 max-h-36 overflow-y-auto">
               {modalNames.map((name, i) => (
                 <li key={`${name}-${i}`}>{name}</li>
               ))}

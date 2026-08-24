@@ -24,6 +24,26 @@ export default async function PasajerosPage() {
       <p className="text-navy-500 text-sm mb-6">
         Todo el pasaje y la tripulación de esta edición
       </p>
+
+      <div className="bg-navy-800 text-white rounded-2xl shadow-card p-6 mb-4">
+        <h2 className="font-display font-semibold text-xl mb-2">Check-in</h2>
+
+        <p className="text-white/80 text-sm leading-relaxed">
+          Al llegar, pasa por el mostrador de Check-in para recoger tu billete y extras del viaje.
+        </p>
+
+        <div className="bg-muted/30 border-gold-50 rounded-lg p-2 mt-4 mb-1" style={{ borderWidth: 'thick' }}>          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-1 mt-1 mb-1">
+            <img 
+              src="/check-in.jpg" 
+              alt="Mostrador de Check-in" 
+              className="w-full max-w-56 sm:max-w-74 object-contain rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+
+      </div>
+
       <PassengerList passengers={passengers} />
     </div>
   );

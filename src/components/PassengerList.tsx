@@ -52,7 +52,7 @@ export function PassengerList({ passengers }: { passengers: PassengerListItem[] 
                   {p.badges.map((badge) => (
                     <span
                       key={badge}
-                      className="inline-flex items-center rounded-full bg-coral-100 text-coral-700 border border-coral-200 px-2.5 py-1 text-xs font-medium"
+                      className="inline-flex items-center rounded-full bg-white text-navy-500 border border-navy-200 px-2.5 py-1 text-xs font-medium"
                     >
                       {badge}
                     </span>

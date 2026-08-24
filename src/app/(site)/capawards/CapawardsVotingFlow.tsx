@@ -41,12 +41,12 @@ function IdentityCard({
           src={passengerPhotoUrl(person.full_name)}
           alt=""
           onError={() => setBroken(true)}
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          className="absolute inset-0 h-full w-full object-cover opacity-80"
         />
       )}
       <div
         className={`absolute inset-0 transition-colors ${
-          canVote ? "bg-navy-800/50 group-hover:bg-gold-600/40" : "bg-navy-400/70"
+          canVote ? "bg-navy-900/50 group-hover:bg-gold-600/40" : "bg-grey-100/70"
         }`}
       />
       <div className="relative z-10 flex h-full items-center justify-center p-2 text-center">

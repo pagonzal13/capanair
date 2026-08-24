@@ -20,7 +20,7 @@ const config: Config = {
         },
         gold: {
           DEFAULT: "#C9A24B",
-          50: "#FBF6EA",
+          50: "#F5ECD4",
           100: "#F4E7C8",
           200: "#EAD4A1",
           300: "#DFC17A",
