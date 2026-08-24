@@ -35,5 +35,6 @@ export interface CapawardsCategory {
   name: string;
   description: string | null;
   sort_order: number;
+  is_multi_select: boolean;
   winner_passenger_id: string | null;
 }

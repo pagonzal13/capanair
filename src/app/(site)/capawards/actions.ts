@@ -6,12 +6,13 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export interface BallotVote {
   category_id: string;
-  nominee_passenger_id: string;
+  nominee_passenger_id?: string;
+  nominee_passenger_ids?: string[];
 }
 
 export type SubmitBallotResult =
   | { ok: true }
-  | { ok: false; error: "ALREADY_VOTED" | "VOTING_CLOSED" | "SELF_VOTE" | "UNKNOWN" };
+  | { ok: false; error: "ALREADY_VOTED" | "VOTING_CLOSED" | "SELF_VOTE" | "EMPTY_GROUP" | "UNKNOWN" };
 
 export async function submitCapawardsBallot(
   voterId: string,
@@ -32,6 +33,9 @@ export async function submitCapawardsBallot(
     }
     if (error.message?.includes("SELF_VOTE_NOT_ALLOWED")) {
       return { ok: false, error: "SELF_VOTE" };
+    }
+    if (error.message?.includes("EMPTY_GROUP")) {
+      return { ok: false, error: "EMPTY_GROUP" };
     }
     return { ok: false, error: "UNKNOWN" };
   }

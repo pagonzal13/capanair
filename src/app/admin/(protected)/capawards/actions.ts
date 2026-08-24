@@ -26,6 +26,7 @@ export async function createCategory(formData: FormData) {
     name: String(formData.get("name") ?? "").trim(),
     description: String(formData.get("description") ?? "").trim() || null,
     sort_order: Number(formData.get("sort_order") ?? 0) || 0,
+    is_multi_select: formData.get("is_multi_select") === "on",
   });
   if (error) throw error;
   refresh();
@@ -40,6 +41,7 @@ export async function updateCategory(formData: FormData) {
       name: String(formData.get("name") ?? "").trim(),
       description: String(formData.get("description") ?? "").trim() || null,
       sort_order: Number(formData.get("sort_order") ?? 0) || 0,
+      is_multi_select: formData.get("is_multi_select") === "on",
       updated_at: new Date().toISOString(),
     })
     .eq("id", id);

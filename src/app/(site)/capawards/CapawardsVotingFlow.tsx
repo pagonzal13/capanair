@@ -13,6 +13,7 @@ interface Category {
   id: string;
   name: string;
   description: string | null;
+  is_multi_select: boolean;
 }
 
 function IdentityCard({
@@ -78,7 +79,9 @@ export function CapawardsVotingFlow({
 }) {
   const [step, setStep] = useState<Step>({ name: "intro" });
   const [voterId, setVoterId] = useState<string | null>(null);
-  const [votes, setVotes] = useState<Record<string, string>>({});
+  // Un array de ids por categoria: 1 elemento en categorias normales,
+  // 1 o mas en categorias de seleccion multiple.
+  const [votes, setVotes] = useState<Record<string, string[]>>({});
 
   const voter = useMemo(
     () => allPassengers.find((p) => p.id === voterId) ?? null,
@@ -106,8 +109,23 @@ export function CapawardsVotingFlow({
     }
   }, [step]);
 
-  function selectNominee(categoryId: string, personId: string) {
-    setVotes((v) => ({ ...v, [categoryId]: personId }));
+  function selectSingleNominee(categoryId: string, personId: string) {
+    setVotes((v) => ({ ...v, [categoryId]: [personId] }));
+    scrollToNextButton();
+  }
+
+  function toggleGroupNominee(categoryId: string, personId: string) {
+    setVotes((v) => {
+      const current = v[categoryId] ?? [];
+      const next = current.includes(personId)
+        ? current.filter((id) => id !== personId)
+        : [...current, personId];
+      return { ...v, [categoryId]: next };
+    });
+    scrollToNextButton();
+  }
+
+  function scrollToNextButton() {
     // Baja el scroll hasta el botón "Siguiente" para que quede a mano en
     // cuanto se habilita.
     requestAnimationFrame(() => {
@@ -130,7 +148,11 @@ export function CapawardsVotingFlow({
     setStep({ name: "submitting" });
     const result = await submitCapawardsBallot(
       voterId,
-      categories.map((c) => ({ category_id: c.id, nominee_passenger_id: votes[c.id] }))
+      categories.map((c) =>
+        c.is_multi_select
+          ? { category_id: c.id, nominee_passenger_ids: votes[c.id] ?? [] }
+          : { category_id: c.id, nominee_passenger_id: (votes[c.id] ?? [])[0] }
+      )
     );
 
     if (result.ok) {
@@ -142,6 +164,7 @@ export function CapawardsVotingFlow({
       ALREADY_VOTED: "Este pasajero ya ha enviado su voto anteriormente.",
       VOTING_CLOSED: "Las votaciones se han cerrado justo ahora. ¡Gracias por intentarlo!",
       SELF_VOTE: "No puedes votarte a ti mismo/a en alguna categoría.",
+      EMPTY_GROUP: "Falta seleccionar a alguien en alguna categoría.",
       UNKNOWN: "Algo ha ido mal al enviar tu voto. Inténtalo de nuevo.",
     };
     setStep({ name: "error", message: messages[result.error] ?? messages.UNKNOWN });
@@ -202,7 +225,7 @@ export function CapawardsVotingFlow({
 
   if (step.name === "category") {
     const category = categories[step.index];
-    const selected = votes[category.id];
+    const selected = votes[category.id] ?? [];
     return (
       <div
         ref={topRef}
@@ -213,23 +236,43 @@ export function CapawardsVotingFlow({
         </p>
         <h2 className="font-display font-semibold text-xl text-navy-800 mb-1">{category.name}</h2>
         {category.description && (
-          <p className="text-navy-500 text-sm mb-5">{category.description}</p>
+          <p className="text-navy-500 text-sm mb-2">{category.description}</p>
+        )}
+        {category.is_multi_select && (
+          <p className="text-gold-600 text-xs font-medium mb-3">
+            Puedes marcar a varias personas (p. ej. un disfraz en grupo).
+          </p>
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6 max-h-96 overflow-y-auto pr-1">
-          {nomineesFor.map((p) => (
-            <button
-              key={p.id}
-              onClick={() => selectNominee(category.id, p.id)}
-              className={`text-left rounded-xl border px-4 py-3 transition-colors ${
-                selected === p.id
-                  ? "border-gold-500 bg-gold-50 ring-1 ring-gold-500"
-                  : "border-navy-200 hover:border-gold-400"
-              }`}
-            >
-              {p.full_name}
-            </button>
-          ))}
+          {nomineesFor.map((p) => {
+            const isSelected = selected.includes(p.id);
+            return (
+              <button
+                key={p.id}
+                onClick={() =>
+                  category.is_multi_select
+                    ? toggleGroupNominee(category.id, p.id)
+                    : selectSingleNominee(category.id, p.id)
+                }
+                className={`text-left rounded-xl border px-4 py-3 transition-colors ${
+                  isSelected
+                    ? "border-gold-500 bg-gold-50 ring-1 ring-gold-500"
+                    : "border-navy-200 hover:border-gold-400"
+                }`}
+              >
+                {category.is_multi_select && (
+                  <span
+                    className={`inline-block mr-2 h-4 w-4 rounded border align-middle ${
+                      isSelected ? "bg-gold-500 border-gold-500" : "border-navy-300"
+                    }`}
+                    aria-hidden
+                  />
+                )}
+                {p.full_name}
+              </button>
+            );
+          })}
         </div>
 
         <div className="flex items-center justify-between gap-3">
@@ -242,7 +285,7 @@ export function CapawardsVotingFlow({
           <button
             ref={nextButtonRef}
             onClick={() => goToCategory(step.index + 1)}
-            disabled={!selected}
+            disabled={selected.length === 0}
             className="rounded-full bg-navy-700 text-white font-medium px-6 py-2.5 hover:bg-navy-600 transition-colors disabled:opacity-40 disabled:pointer-events-none"
           >
             Siguiente
@@ -267,16 +310,20 @@ export function CapawardsVotingFlow({
 
         <ul className="divide-y divide-navy-100 rounded-xl border border-navy-100 overflow-hidden mb-6">
           {categories.map((c, i) => {
-            const nomineeId = votes[c.id];
-            const nominee = allPassengers.find((p) => p.id === nomineeId);
+            const nomineeIds = votes[c.id] ?? [];
+            const names = nomineeIds
+              .map((id) => allPassengers.find((p) => p.id === id)?.full_name)
+              .filter(Boolean);
             return (
               <li key={c.id}>
                 <button
                   onClick={() => goToCategory(i)}
                   className="w-full flex items-center justify-between gap-3 px-2 py-3 text-left hover:bg-navy-50 transition-colors"
                 >
-                  <span className="text-navy-600 text-sm">{c.name}:</span>
-                  <span className="font-medium text-navy-800">{nominee?.full_name ?? "—"}</span>
+                  <span className="text-navy-600 text-sm shrink-0">{c.name}:</span>
+                  <span className="font-medium text-navy-800 text-right">
+                    {names.length > 0 ? names.join(" + ") : "—"}
+                  </span>
                 </button>
               </li>
             );

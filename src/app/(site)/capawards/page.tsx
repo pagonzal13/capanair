@@ -36,7 +36,9 @@ export default async function CapawardsPage() {
     if (resultsPublished) {
       const { data: categories, error } = await supabase
         .from("capawards_categories")
-        .select("id, name, description, winner_passenger_id, passengers:winner_passenger_id (full_name)")
+        .select(
+          "id, name, description, winner_passenger_id, is_multi_select, passengers:winner_passenger_id (full_name)"
+        )
         .order("sort_order");
       if (error) throw error;
 
@@ -50,6 +52,9 @@ export default async function CapawardsPage() {
             {(categories ?? []).map((c) => {
               const winnerName = (c as unknown as { passengers: { full_name: string } | null }).passengers
                 ?.full_name;
+              const displayValue = c.is_multi_select
+                ? "Anunciado en persona"
+                : winnerName ?? "Sin ganador";
               return (
                 <li
                   key={c.id}
@@ -57,9 +62,7 @@ export default async function CapawardsPage() {
                 >
                   <div>
                     <div className="text-xs uppercase tracking-wide text-navy-400 font-medium">{c.name}</div>
-                    <div className="font-display font-semibold text-navy-800 text-lg">
-                      {winnerName ?? "Sin ganador"}
-                    </div>
+                    <div className="font-display font-semibold text-navy-800 text-lg">{displayValue}</div>
                   </div>
                   <span className="text-3xl" aria-hidden>
                     🏆
@@ -94,7 +97,10 @@ export default async function CapawardsPage() {
 
   const [{ data: categories, error: catError }, { data: allPassengers, error: passError }, { data: ballots, error: ballotError }] =
     await Promise.all([
-      supabase.from("capawards_categories").select("id, name, description").order("sort_order"),
+      supabase
+        .from("capawards_categories")
+        .select("id, name, description, is_multi_select")
+        .order("sort_order"),
       supabase.from("passengers").select("id, full_name").order("full_name"),
       supabase.from("capawards_ballots").select("voter_passenger_id"),
     ]);
