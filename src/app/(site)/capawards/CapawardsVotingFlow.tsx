@@ -240,7 +240,7 @@ export function CapawardsVotingFlow({
         )}
         {category.is_multi_select && (
           <p className="text-gold-600 text-xs font-medium mb-3">
-            Puedes marcar a varias personas (p. ej. un disfraz en grupo).
+            Puedes marcar a varias personas si tienen un disfraz en grupo.
           </p>
         )}
 
@@ -318,12 +318,12 @@ export function CapawardsVotingFlow({
               <li key={c.id}>
                 <button
                   onClick={() => goToCategory(i)}
-                  className="w-full flex items-center justify-between gap-3 px-2 py-3 text-left hover:bg-navy-50 transition-colors"
+                  className="w-full items-center justify-between gap-3 px-2 py-3 text-left hover:bg-navy-50 transition-colors"
                 >
-                  <span className="text-navy-600 text-sm shrink-0">{c.name}:</span>
-                  <span className="font-medium text-navy-800 text-right">
-                    {names.length > 0 ? names.join(" + ") : "—"}
-                  </span>
+                  <div className="text-navy-600 text-sm shrink-0">{c.name}:</div>
+                  <div className="font-medium text-navy-800 text-right">
+                    {names.length > 0 ? names.join(" & ") : "—"}
+                  </div>
                 </button>
               </li>
             );
@@ -364,7 +364,7 @@ export function CapawardsVotingFlow({
           ¡Voto enviado!
         </h2>
         <p className="text-navy-500 text-sm">
-          Gracias por participar, {voter?.full_name}. Los resultados se anunciarán en persona.
+          Gracias por participar, {voter?.full_name}. Los resultados se anunciarán en la ceremonia.
         </p>
       </div>
     );

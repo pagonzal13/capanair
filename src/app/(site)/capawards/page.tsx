@@ -53,7 +53,7 @@ export default async function CapawardsPage() {
               const winnerName = (c as unknown as { passengers: { full_name: string } | null }).passengers
                 ?.full_name;
               const displayValue = c.is_multi_select
-                ? "Anunciado en persona"
+                ? "Anunciado en la ceremonia"
                 : winnerName ?? "Sin ganador";
               return (
                 <li

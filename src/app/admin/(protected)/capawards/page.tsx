@@ -79,7 +79,7 @@ export default async function AdminCapawardsPage() {
       }
       const rows = Array.from(counts.values())
         .sort((a, b) => b.votes - a.votes)
-        .slice(0, 10)
+        .slice(0, 20)
         .map((entry) => ({
           name: entry.ids.map((id) => nameById.get(id) ?? "—").join(" + "),
           votes: entry.votes,
@@ -89,7 +89,7 @@ export default async function AdminCapawardsPage() {
       const rows = tally
         .filter((t) => t.category_id === category.id)
         .sort((a, b) => b.votes_count - a.votes_count)
-        .slice(0, 3)
+        .slice(0, 10)
         .map((t) => ({ name: nameById.get(t.nominee_passenger_id) ?? "—", votes: t.votes_count }));
       topByCategory.set(category.id, rows);
     }
@@ -140,7 +140,7 @@ export default async function AdminCapawardsPage() {
           Publica solo los ganadores (top 1 de cada categoría) en la web abierta, en{" "}
           <code className="font-mono text-xs">/capawards</code>. Debes cerrar antes las
           votaciones. Las categorías de selección múltiple no publican ganador automático
-          (usa su Top 10 de aquí abajo para anunciarlo tú en persona).{" "}
+          (usa su Top 20 de aquí abajo para anunciarlo tú en persona).{" "}
           {resultsPublished && (
             <span className="text-green-600 font-medium">Ya hay resultados publicados.</span>
           )}
@@ -256,7 +256,7 @@ export default async function AdminCapawardsPage() {
 
             <div className="border-t border-navy-100 pt-3">
               <p className="text-xs font-medium uppercase tracking-wide text-navy-400 mb-2">
-                {category.is_multi_select ? "Top 10 grupos" : "Top 3 votos"}
+                {category.is_multi_select ? "Top 20 grupos" : "Top 10 votos"}
               </p>
               {(topByCategory.get(category.id) ?? []).length === 0 ? (
                 <p className="text-sm text-navy-400">Sin votos todavía.</p>
