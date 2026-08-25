@@ -34,12 +34,9 @@ export function PassengerList({ passengers }: { passengers: PassengerListItem[] 
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Buscar pasajero o puerta de embarque"
-          className="w-full rounded-xl border border-navy-200 px-1.5 py-2.5 pl-7 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500"
+          placeholder="🔍 Buscar pasajero o puerta de embarque"
+          className="w-full rounded-xl border border-navy-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500"
         />
-        <span className="absolute left-2 top-1/2 -translate-y-1/2 text-navy-300" aria-hidden>
-          🔍
-        </span>
       </div>
 
       <ul className="divide-y divide-navy-100 rounded-2xl border border-navy-100 bg-white shadow-card overflow-hidden">
