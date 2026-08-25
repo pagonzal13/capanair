@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { LoyaltyBadge } from "./LoyaltyBadge";
 import { PassengerAvatar } from "./PassengerAvatar";
+import { PassengerPhotoModal } from "./PassengerPhotoModal";
 
 export interface PassengerListItem {
   id: string;
@@ -14,6 +15,7 @@ export interface PassengerListItem {
 
 export function PassengerList({ passengers }: { passengers: PassengerListItem[] }) {
   const [query, setQuery] = useState("");
+  const [selectedName, setSelectedName] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -44,7 +46,14 @@ export function PassengerList({ passengers }: { passengers: PassengerListItem[] 
         {filtered.map((p) => (
           <li key={p.id} className="flex items-center justify-between gap-3 px-4 py-3">
             <div className="flex items-center gap-3 min-w-0">
-              <PassengerAvatar name={p.full_name} className="h-10 w-10" />
+              <button
+                type="button"
+                onClick={() => setSelectedName(p.full_name)}
+                aria-label={`Ver foto de ${p.full_name}`}
+                className="shrink-0 rounded-full focus:outline-none focus:ring-2 focus:ring-gold-500"
+              >
+                <PassengerAvatar name={p.full_name} className="h-10 w-10" />
+              </button>
               <div className="min-w-0">
                 <div className="font-medium text-navy-800 truncate">{p.full_name}</div>
                 <div className="mt-1 flex flex-wrap items-center gap-1.5">
@@ -76,6 +85,10 @@ export function PassengerList({ passengers }: { passengers: PassengerListItem[] 
           </li>
         )}
       </ul>
+
+      {selectedName && (
+        <PassengerPhotoModal name={selectedName} onClose={() => setSelectedName(null)} />
+      )}
     </div>
   );
 }
