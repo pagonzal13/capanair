@@ -20,6 +20,30 @@ function MessageCard({ emoji, title, children }: { emoji: string; title: string;
   );
 }
 
+function CategoriesTeaser({ categories }: { categories: { id: string; name: string; description: string | null }[] }) {
+  if (categories.length === 0) return null;
+  return (
+    <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 mb-6">
+      <div className="flex flex-col items-center text-center mb-5">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/capawards-trophy.png" alt="" className="h-20 w-20 object-contain mb-3" />
+        <h1 className="font-display font-semibold text-2xl text-navy-800 mb-1">Categorías Capawards</h1>
+        <p className="text-navy-500 text-sm">
+          Estas son las categorías de esta edición. ¡Haz campaña y hazte notar para llevarte tu estatuilla!
+        </p>
+      </div>
+      <ul className="space-y-3">
+        {categories.map((c) => (
+          <li key={c.id} className="border border-navy-100 rounded-xl px-4 py-3">
+            <div className="font-display font-semibold text-navy-800">{c.name}</div>
+            {c.description && <div className="text-sm text-navy-500 mt-0.5">{c.description}</div>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default async function CapawardsPage() {
   const supabase = getSupabaseAdmin();
 
@@ -75,8 +99,15 @@ export default async function CapawardsPage() {
       );
     }
 
+    const { data: previewCategories, error: previewError } = await supabase
+      .from("capawards_categories")
+      .select("id, name, description")
+      .order("sort_order");
+    if (previewError) throw previewError;
+
     return (
       <PageShell>
+        <CategoriesTeaser categories={previewCategories ?? []} />
         <MessageCard emoji="✈️" title="Las votaciones no están abiertas">
           Siga disfrutando del vuelo y vuelva más tarde.
         </MessageCard>
