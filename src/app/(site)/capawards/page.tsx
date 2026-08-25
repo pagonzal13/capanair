@@ -7,7 +7,10 @@ export const revalidate = 0;
 export const metadata = { title: "Capawards" };
 
 function PageShell({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto max-w-2xl px-4 py-10">{children}</div>;
+  return <div className="mx-auto max-w-2xl px-4 py-10">
+    <h1 className="font-display font-semibold text-2xl text-navy-800 mb-4">🏆 Capawards</h1>
+    {children}
+    </div>;
 }
 
 function MessageCard({ emoji, title, children }: { emoji: string; title: string; children: React.ReactNode }) {
@@ -24,17 +27,10 @@ function CategoriesTeaser({ categories }: { categories: { id: string; name: stri
   if (categories.length === 0) return null;
   return (
     <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 mb-6">
-      <div className="flex flex-col items-center text-center mb-5">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/capawards-trophy.png" alt="" className="h-20 w-20 object-contain mb-3" />
-        <h1 className="font-display font-semibold text-2xl text-navy-800 mb-1">Categorías Capawards</h1>
-        <p className="text-navy-500 text-sm">
-          Estas son las categorías de esta edición. ¡Haz campaña y hazte notar para llevarte tu estatuilla!
-        </p>
-      </div>
+      <p className="text-navy-500 text-sm mb-6">Estas son las categorías que tendremos en esta edición. Esperamos que haya mucha competición por merecer algunas, y que nadie quiera ser el "Zángano" o la "Bombita de humo" 2026.</p>
       <ul className="space-y-3">
         {categories.map((c) => (
-          <li key={c.id} className="border border-navy-100 rounded-xl px-4 py-3">
+          <li key={c.id} className="border border-gold-200 rounded-xl px-4 py-3">
             <div className="font-display font-semibold text-navy-800">{c.name}</div>
             {c.description && <div className="text-sm text-navy-500 mt-0.5">{c.description}</div>}
           </li>

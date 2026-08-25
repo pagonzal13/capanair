@@ -173,9 +173,9 @@ export function CapawardsVotingFlow({
   if (step.name === "intro") {
     return (
       <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 sm:p-8 text-center">
-        <h1 className="font-display font-semibold text-2xl text-navy-800 mb-4">Capawards 🏆</h1>
+        <h1 className="font-display font-semibold text-2xl text-navy-800 mb-4">¡Hora de votar!</h1>
         <p className="text-navy-600 text-sm sm:text-base leading-relaxed mb-6">
-          ¡Bienvenido/a una nueva edición de los Capawards! Desde aquí podrás votar a los
+          Bienvenido/a una nueva edición de los Capawards. Desde aquí podrás votar a los
           personajes más destacados de esta edición (o al menos del primer día, como siempre; sí,
           ya sabemos que eso es un problema, pero mañana todo el mundo estará ya con otras cosas).
           Vota en cada categoría a quien consideres que merece el honor.
