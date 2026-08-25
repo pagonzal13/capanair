@@ -27,7 +27,7 @@ function CategoriesTeaser({ categories }: { categories: { id: string; name: stri
   if (categories.length === 0) return null;
   return (
     <div className="bg-white rounded-2xl shadow-card border border-navy-100 p-6 mb-6">
-      <p className="text-navy-500 text-sm mb-6">Estas son las categorías que tendremos en esta edición. Esperamos que haya mucha competición por merecer algunas, y que nadie quiera ser el "Zángano" o la "Bombita de humo" 2026.</p>
+      <p className="text-navy-500 text-sm mb-6">Estas son las categorías que tendremos en esta edición. Esperamos que haya mucha competición por merecer algunas, y que nadie quiera ser el 𝑍á𝑛𝑔𝑎𝑛𝑜 o la 𝐵𝑜𝑚𝑏𝑖𝑡𝑎 𝑑𝑒 ℎ𝑢𝑚𝑜 2026.</p>
       <ul className="space-y-3">
         {categories.map((c) => (
           <li key={c.id} className="border border-gold-200 rounded-xl px-4 py-3">
